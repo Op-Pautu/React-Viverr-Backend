@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-
+const userRoute = require("./routes/user.route");
 const app = express();
 dotenv.config();
 
@@ -15,6 +15,8 @@ const connect = async () => {
     console.log(error);
   }
 };
+
+app.use("/api/users", userRoute);
 
 app.listen(3000, () => {
   connect();
