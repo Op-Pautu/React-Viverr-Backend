@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
 dotenv.config();
 
 //set up routes
@@ -28,6 +30,7 @@ const connect = async () => {
 //middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errrorMessage = err.message || "Something went wrong";
