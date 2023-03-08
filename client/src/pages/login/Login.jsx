@@ -10,10 +10,16 @@ function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(res.data);
     } catch (err) {
       setError(err);
