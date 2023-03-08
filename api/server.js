@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = express();
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
 //set up routes
@@ -24,6 +25,8 @@ const connect = async () => {
   }
 };
 app.use(express.json());
+app.use(cookieParser());
+
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 // app.use("/api/conversations", conversationRoute);
