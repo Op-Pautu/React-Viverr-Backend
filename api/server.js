@@ -24,8 +24,15 @@ const connect = async () => {
     console.log(error);
   }
 };
+
+//middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errrorMessage = err.message || "Something went wrong";
+  return res.status(errorStatus).send(errrorMessage);
+});
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
