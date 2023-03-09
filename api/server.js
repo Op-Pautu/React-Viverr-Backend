@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
+const errorHandler = require("./middleware/errorHandler");
 dotenv.config();
 
 //set up routes
@@ -30,18 +30,20 @@ const connect = async () => {
 //middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errrorMessage = err.message || "Something went wrong";
   return res.status(errorStatus).send(errrorMessage);
 });
-
+app.use(errorHandler);
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 // app.use("/api/conversations", conversationRoute);
-// app.use("/api/messages", messageRoute);
 // app.use("/api/gigs", gigRoute);
+// app.use("/api/messages", messageRoute);
 // app.use("/api/reviews", reviewRoute);
 // app.use("/api/orders", orderRoute);
 

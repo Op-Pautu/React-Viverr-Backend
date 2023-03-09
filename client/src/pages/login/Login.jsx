@@ -1,29 +1,27 @@
 import React from "react";
 import "./Login.scss";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import newRequest from "../../utils/newRequest.js";
 
 function Login() {
-  const [username, setUserName] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState(null);
+
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        {
-          username,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(res.data);
+      const res = await newRequest.post("/auth/login", { username, password });
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      navigate("/");
     } catch (err) {
-      setError(err);
-      console.log(err);
+      console.log(err); // add this line
+      const errorResponse = err.response.data;
+      const errorMessage =
+        errorResponse.message || errorResponse.error || "An error occurred";
+      setError(errorMessage);
     }
   }
   return (
@@ -35,7 +33,7 @@ function Login() {
           type="text"
           name="username"
           placeholder="johndoe"
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor="">Password</label>
@@ -46,6 +44,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );
