@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest.js";
 
 function Login() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -16,8 +16,8 @@ function Login() {
       const res = await newRequest.post("/auth/login", { username, password });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
       navigate("/");
+      console.log(res.data);
     } catch (err) {
-      console.log(err); // add this line
       const errorResponse = err.response.data;
       const errorMessage =
         errorResponse.message || errorResponse.error || "An error occurred";
@@ -40,7 +40,6 @@ function Login() {
         <input
           type="text"
           name="password"
-          placeholder="johndoe@gmail.com"
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>

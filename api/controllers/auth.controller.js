@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const errorHandler = require("../middleware/errorHandler");
+const createError = require("../utils/createError");
 
 const register = async (req, res, next) => {
   try {
@@ -20,10 +20,10 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    if (!user) return errorHandler(404, "User not found!", next);
+    if (!user) return next(createError(404, "User not found!"));
 
     const validPassword = bcrypt.compareSync(req.body.password, user.password);
-    if (!validPassword) return errorHandler(400, "Wrong password", next);
+    if (!validPassword) return next(createError(400, "Wrong password"));
 
     const token = jwt.sign(
       {
@@ -55,7 +55,7 @@ const logout = async (req, res, next) => {
       .status(200)
       .send("User has been logged out");
   } catch (error) {
-    next(error);
+    next(err);
   }
 };
 

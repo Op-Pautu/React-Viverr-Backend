@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const errorHandler = require("./middleware/errorHandler");
+
 dotenv.config();
 
 //set up routes
@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
   const errrorMessage = err.message || "Something went wrong";
   return res.status(errorStatus).send(errrorMessage);
 });
-app.use(errorHandler);
+
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 // app.use("/api/conversations", conversationRoute);
