@@ -12,7 +12,7 @@ const userRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.route");
 // const conversationRoute = require("./routes/conversation.route");
 // const messageRoute = require("./routes/message.route");
-// const gigRoute = require("./routes/gig.route");
+const gigRoute = require("./routes/gig.route");
 // const reviewRoute = require("./routes/review.route");
 // const orderRoute = require("./routes/order.route");
 
@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 // app.use("/api/conversations", conversationRoute);
-// app.use("/api/gigs", gigRoute);
+app.use("/api/gigs", gigRoute);
 // app.use("/api/messages", messageRoute);
 // app.use("/api/reviews", reviewRoute);
 // app.use("/api/orders", orderRoute);
