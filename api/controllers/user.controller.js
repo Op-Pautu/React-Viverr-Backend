@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+
 const deleteUser = async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
@@ -10,6 +11,14 @@ const deleteUser = async (req, res, next) => {
   res.status(200).send("User deleted");
 };
 
+const getUser = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(createError(404, "User not found"));
+  }
+  res.status(200).send(user);
+};
 module.exports = {
   deleteUser,
+  getUser,
 };
