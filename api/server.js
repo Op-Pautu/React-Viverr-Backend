@@ -13,7 +13,7 @@ const authRoute = require("./routes/auth.route");
 // const conversationRoute = require("./routes/conversation.route");
 // const messageRoute = require("./routes/message.route");
 const gigRoute = require("./routes/gig.route");
-// const reviewRoute = require("./routes/review.route");
+const reviewRoute = require("./routes/review.route");
 // const orderRoute = require("./routes/order.route");
 
 mongoose.set("strictQuery", true);
@@ -44,7 +44,7 @@ app.use("/api/auth", authRoute);
 // app.use("/api/conversations", conversationRoute);
 app.use("/api/gigs", gigRoute);
 // app.use("/api/messages", messageRoute);
-// app.use("/api/reviews", reviewRoute);
+app.use("/api/reviews", reviewRoute);
 // app.use("/api/orders", orderRoute);
 
 app.listen(3000, () => {

@@ -8,5 +8,7 @@ const {
 } = require("../controllers/review.controller");
 
 router.post("/", verifyToken, createReview);
-router.get("/:id", getReviews);
+router.get("/:gigId", getReviews);
 router.delete("/:id", verifyToken, deleteReview);
+
+module.exports = router;
